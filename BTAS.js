@@ -13,6 +13,9 @@
 // @require      https://code.jquery.com/jquery-3.6.4.min.js
 // @grant        GM_registerMenuCommand
 // @grant        GM_unregisterMenuCommand
+// @grant        GM_xmlhttpRequest
+// @connect      raw.githubusercontent.com
+// @run-at       document-idle
 // ==/UserScript==
 
 var $ = window.jQuery;
@@ -200,93 +203,78 @@ function checkKeywords() {
  * It adds click event listeners to the "Edit" button based on certain conditions,
  * and generates a specific HTML element for the edit notification.
  */
-function editNotify(LogSourceDomain, LogSource, Labels, TicketAutoEscalate) {
+function editNotify(ValueFromPage) {
     console.log('#### Code editNotify run ####');
-    const orgNotifydict = {
-        'Dev Team':
-            'Please do NOT escalate to the customer<br>\
-            AND contact Dev Team via Teams Conversation first to confirm if it is due to their operatation',
-        'esf': 'Please escalated according to the Label tags and document.<br>\
-            https://172.18.2.13/books/customers/page/esf-cortex-endpoint-group-jira-organization-mapping',
-        'swireproperties':
-            'Please escalated according to the group, hostname value.<br>\
-            Check if additional Participants need to be added through HK_MSS_SOP.doc',
-        'lsh-hk':
-            'Please escalated according to the Label tags and document.<br>\
-            http://172.18.2.13/books/customers/page/lsh-hk-lei-shing-hong-hk',
-        'toysrus':
-            'If the alert is related to Malicious or Unwanted software, there is NO NEED to escalate.<br>\
-            Please help the customer run full scan on MDE and then close ticket. Finally, add full scan screenshots in internal comments',
-        'Auto Escalate':
-            'All automatically upgraded tickets can NOT be closed directly, and need to be upgraded to the customer. Only need to add a description and ATT&CK, and wait for the customer to confirm before closing'
-    };
 
-    function addEditonClick() {
-        // # Add a click event listener to the "Edit" button related to the "LogSourceDomain" field
-        if (
-            LogSourceDomain.includes('esf') ||
-            LogSourceDomain.includes('swireproperties') ||
-            LogSourceDomain.includes('lsh-hk') ||
-            LogSourceDomain.includes('toysrus')
-        ) {
-            const orgNotify = orgNotifydict[LogSourceDomain];
-            $('#edit-issue').on('click', () => {
-                showFlag('warning', `${LogSourceDomain} ticket`, `${orgNotify}`, 'manual');
-            });
+    function fetchOrgNotifydict() {
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: 'https://raw.githubusercontent.com/Dyebasedink/BTAS/Dev/notify.json',
+            onload: function (response) {
+                if (response.status === 200) {
+                    const data = JSON.parse(response.responseText);
+                    addClickListener(data);
+                    generateNotify();
+                } else {
+                    console.error('Error fetching orgNotifydict:', response.status);
+                }
+            },
+            onerror: function (error) {
+                console.error('Error fetching orgNotifydict:', error);
+            }
+        });
+    }
+    fetchOrgNotifydict();
+
+    // Add a click event listener to button
+    function addClickListener(orgNotifydict) {
+        // get button path
+        function clickButton(click) {
+            const buttonMap = {
+                Edit: '#edit-issue',
+                Resolve: '#action_id_761'
+            };
+            return buttonMap[click] || '';
         }
-        if (LogSourceDomain.includes('kerrypropshk')) {
-            if (Labels === 'UnassignedGroup') {
-                $('#edit-issue').on('click', () => {
-                    showFlag(
-                        'warning',
-                        'kerrypropshk UnassignedGroup ticket',
-                        'Please note that if the host starts with cn/sz/bj/sh, Do NOT escalate it on Jira.<br>\
-                    Instead, share the issue key and MDE link with Desen and Barry.<br>\
-                    Then, choose "Won\'t Do" as the Resolution and Resolve this issue.<br>\
-                    In the Comments, mention that the host belongs to PRC and has been handed over to the SH team for handling.',
-                        'manual'
-                    );
-                });
-            } else {
-                $('#edit-issue').on('click', () => {
-                    showFlag(
-                        'warning',
-                        'kerrypropshk ticket',
-                        'Please copy the description to the comments for the customer',
-                        'manual'
-                    );
-                });
+
+        // check all the condition
+        function checkProperties(properties) {
+            return (
+                Object.keys(properties).length === 0 ||
+                Object.entries(properties).every(([property, value]) => {
+                    return Object.keys(ValueFromPage).includes(property) && value == ValueFromPage[property];
+                })
+            );
+        }
+
+        function processSection(sectionKey) {
+            const sectionData = orgNotifydict[sectionKey];
+            const valueFromPage = ValueFromPage[sectionKey];
+            for (const key in sectionData) {
+                if (valueFromPage.includes(key)) {
+                    const { ticketname, message, properties, click } = sectionData[key];
+                    const button = clickButton(click);
+                    if (checkProperties(properties)) {
+                        $(button).on('click', () => {
+                            showFlag('warning', `${ticketname} ticket`, `${message}`, 'manual');
+                        });
+                    }
+                }
             }
         }
-        // # Add a click event listener to the "Edit" button related to the "LogSource" field
-        if (
-            LogSource.includes('plwazag') ||
-            LogSource.includes('LogCollector') ||
-            LogSource.includes('.int.darklab.hk')
-        ) {
-            const orgNotify = orgNotifydict['Dev Team'];
-            $('#edit-issue').on('click', () => {
-                showFlag('warning', `${LogSource} ticket`, `${orgNotify}`, 'manual');
-            });
-        }
-        // # Add a click event listener to the "Resolve this issue" button related to the "Log Source Domain" field
-        if (TicketAutoEscalate == 'Yes') {
-            const orgNotify = orgNotifydict['Auto Escalate'];
-            $('#action_id_761').on('click', () => {
-                showFlag('warning', `Auto Escalate ticket`, `${orgNotify}`, 'manual');
-            });
-        }
-    }
-    addEditonClick();
 
-    function generateEditnotify() {
+        processSection('LogSourceDomain');
+        processSection('LogSource');
+        processSection('TicketAutoEscalate');
+    }
+
+    // add a element into toolbar
+    function generateNotify() {
         const toolbar = $('.aui-toolbar2-primary');
         const element = $('<div id="generateEditnotify"></div>');
         toolbar.append(element);
     }
-    generateEditnotify();
 }
-
 /**
  * Creates a new button and adds it to the DOM.
  * @param {string} id - The ID attribute for the new button element.
@@ -843,9 +831,11 @@ function WineventAlertHandler(rawLog) {
         const Labels = $('.labels-wrap .labels li a span').text();
         const LogSource = $('#customfield_10204-val').text().trim();
         const TicketAutoEscalate = $('#customfield_12202-val').text().trim();
+        const ValueFromPage = { LogSourceDomain, Labels, LogSource, TicketAutoEscalate };
+        // If it pops up once, it will not be reminded again
         if ($('#issue-content').length && !$('#generateEditnotify').length) {
             console.log('#### Code Issue page: Edit Notify ####');
-            editNotify(LogSourceDomain, LogSource, Labels, TicketAutoEscalate);
+            editNotify(ValueFromPage);
         }
     }, 3000);
 })();
