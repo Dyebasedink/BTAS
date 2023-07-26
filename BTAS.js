@@ -605,7 +605,7 @@ function CBAlertHandler(rawLog, LogSourceDomain) {
                 });
                 if (log.trim() !== '') {
                     acc.push({
-                        AlertTitle: cb_log.watchlist_name,
+                        Summary: cb_log.watchlist_name,
                         HostName: cb_log.computer_name,
                         HostIp: cb_log.interface_ip,
                         UserName: cb_log.username,
@@ -662,7 +662,7 @@ function CBAlertHandler(rawLog, LogSourceDomain) {
                     const cef_log_extends = cefToJson(cef_log[7]);
 
                     acc.push({
-                        AlertTitle: cef_log_header[4],
+                        Summary: cef_log_header[4],
                         // for some like "server error" tickets
                         HostName: cef_log_extends.dhost ? cef_log_extends.dhost : cef_log_extends.dvchost,
                         HostIp: cef_log_extends.dst,
@@ -693,10 +693,10 @@ function CBAlertHandler(rawLog, LogSourceDomain) {
     function generateDescription() {
         const alertDescriptions = [];
         for (const info of alertInfo) {
-            const { AlertTitle } = info;
-            let desc = `Observed ${AlertTitle}\n`;
+            const { Summary } = info;
+            let desc = `Observed ${Summary}\n`;
             Object.entries(info).forEach(([index, value]) => {
-                if (value !== undefined && index != 'AlertTitle' && index != 'CBlink') {
+                if (value !== undefined && index != 'Summary' && index != 'CBlink') {
                     desc += `${index}: ${value}\n`;
                 }
             });
