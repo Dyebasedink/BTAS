@@ -2,7 +2,7 @@
 // @name         BTAS
 // @namespace    https://github.com/Ripper-S/BTAS
 // @homepageURL  https://github.com/Ripper-S/BTAS
-// @version      1.5.3
+// @version      1.6.1
 // @description  Blue Team Assistance Script
 // @author       Barry Y Yang; Jack SA Chen; Xingyu X Zhou
 // @license      Apache-2.0
@@ -178,7 +178,7 @@ function checkupdate(NotifyControls) {
     if (overdueTickets && promptCheckbox.find('input').prop('checked')) {
         GM_addStyle(`
         .aui-banner.aui-banner-warning {
-            background-color: #ffff80 !important;
+            background-color: #ffab00 !important;
             color: black !important;
         }
     `);
