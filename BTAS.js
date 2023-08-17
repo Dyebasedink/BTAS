@@ -272,6 +272,47 @@ function checkKeywords() {
     }
 }
 
+function checkOrg() {
+    const organization = $(
+        '#customfield_10002-val > sd-customer-organizations > ul > li > span > span.sd-organization-value'
+    )
+        .text()
+        .trim()
+        .toLowerCase();
+    const LogSourceDomain = $('#customfield_10223-val').text().trim().toLowerCase();
+    const desc = $('#description-val > div').text().trim();
+    let orgDict = {
+        'citysuper': ['C!S'],
+        'huatai': ['HTSC'],
+        'newworld': ['NWD', 'NWD-OnPrem', 'NWD-Network', 'NWD-Cloud'],
+        'hkuniversity': ['HKU-CPOS'],
+        'toppanmerrill': ['TOPPAN'],
+        'bossini': ['BOS'],
+        'swireproperties': ['SPL_HK', 'Swireprop-unclassified', 'SHG_CHINA', 'SPL_CHINA'],
+        'k11-hk': ['K11-OnPrem', 'k11-CN', 'k11-Network']
+    };
+
+    try {
+        // not first handle ticket
+        if (desc !== 'Click to add description') {
+            if (organization == '') {
+                AJS.banner({ body: 'Please add organization field' });
+            } else {
+                if (
+                    !organization.includes(LogSourceDomain) &&
+                    !orgDict[LogSourceDomain].map((item) => item.toLowerCase()).includes(organization)
+                ) {
+                    AJS.banner({
+                        body: 'Organization field is wrong, please remove organization first and then add correct organization'
+                    });
+                }
+            }
+        }
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+    }
+}
+
 function checkATTCK() {
     const status = $('#status-val > span').text().trim();
     const attck = $('#rowForcustomfield_10220 > div > strong > label').text();
@@ -1205,6 +1246,7 @@ function CSAlertHandler(...kwargs) {
             console.log('#### Code Issue page: check Keywords ####');
             checkKeywords();
             checkATTCK();
+            checkOrg();
         }
     }, 3000);
 
