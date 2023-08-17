@@ -2,7 +2,7 @@
 // @name         BTAS
 // @namespace    https://github.com/Ripper-S/BTAS
 // @homepageURL  https://github.com/Ripper-S/BTAS
-// @version      1.6.7
+// @version      1.6.8
 // @description  Blue Team Assistance Script
 // @author       Barry Y Yang; Jack SA Chen; Xingyu X Zhou
 // @license      Apache-2.0
@@ -1240,7 +1240,7 @@ function CSAlertHandler(...kwargs) {
         }
     }, 3000);
 
-    // Issue page: check Keywords and ATT&CK
+    // Issue page: check Keywords and ATT&CK and Org
     setInterval(() => {
         if ($('#issue-content').length && !$('.aui-banner-error').length) {
             console.log('#### Code Issue page: check Keywords ####');
