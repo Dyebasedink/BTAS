@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         BTAS
 // @namespace    https://github.com/Mr-Tree-S/BTAS
-// @homepageURL  https://github.com/Ripper-S/BTAS
-// @version      2.1.1
+// @homepageURL  https://github.com/Mr-Tree-S/BTAS
+// @version      2.1.2
 // @description  Blue Team Assistance Script
 // @author       Barry Y Yang; Jack SA Chen; Xingyu X Zhou
 // @license      Apache-2.0
