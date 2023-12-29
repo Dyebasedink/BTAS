@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         BTAS
-// @namespace    https://github.com/Ripper-S/BTAS
+// @namespace    https://github.com/Mr-Tree-S/BTAS
 // @homepageURL  https://github.com/Ripper-S/BTAS
 // @version      2.1.1
 // @description  Blue Team Assistance Script
