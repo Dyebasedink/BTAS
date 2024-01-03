@@ -2,7 +2,7 @@
 // @name         BTAS
 // @namespace    https://github.com/Mr-Tree-S/BTAS
 // @homepageURL  https://github.com/Mr-Tree-S/BTAS
-// @version      2.1.3
+// @version      2.1.4
 // @description  Blue Team Assistance Script
 // @author       Barry Y Yang; Jack SA Chen; Xingyu X Zhou
 // @license      Apache-2.0
@@ -353,23 +353,6 @@ function registerExceptionMenu() {
             showDialog(jsonData, 'Json Format');
         }
     });
-
-    GM_registerMenuCommand('Decode Base64', () => {
-        const selection = window.getSelection().toString().trim();
-        if (!selection) {
-            showFlag('error', 'No Issue Key selected', '', 'auto');
-            return;
-        }
-        let result = '';
-        try {
-            result = atob(selection);
-        } catch (e) {
-            showFlag('error', '发生异常' + e, '', 'auto');
-            return false;
-        }
-        showDialog(result, 'Decode Base64');
-    });
-}
 
 /**
  * This function creates audio and checkbox controls and adds them to the Jira share button's parent node
