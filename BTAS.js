@@ -353,6 +353,7 @@ function registerExceptionMenu() {
             showDialog(jsonData, 'Json Format');
         }
     });
+}
 
 /**
  * This function creates audio and checkbox controls and adds them to the Jira share button's parent node
