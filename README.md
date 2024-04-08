@@ -10,8 +10,8 @@ BTAS is a browser assistant script developed for Security Operations Center (SOC
 
 You can install and update the BTAS script using Greasy Fork by clicking the following links:
 
--   [BTAS Stable Version](https://greasyfork.org/en/scripts/463908-btas)
--   [BTAS Beta Version](https://greasyfork.org/zh-CN/scripts/469395-btas-beta)
+- [BTAS Stable Version](https://greasyfork.org/en/scripts/463908-btas)
+- [BTAS Beta Version](https://greasyfork.org/zh-CN/scripts/469395-btas-beta)
 
 ## Function Introduction: Blue Team Enhancement & BTAS
 
@@ -30,7 +30,7 @@ You can install and update the BTAS script using Greasy Fork by clicking the fol
 
 ## Contributions
 
-Developed by Barry before version 0.93, restructured by Jack for version 1.0.1 and subsequent development and maintenance, with Xingyu contributing to development after version 1.3.2.
+Barry, Jack, Xingyu, Mike
 
 ## License
 
