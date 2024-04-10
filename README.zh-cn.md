@@ -10,8 +10,8 @@ BTAS 是一款为安全运营中心(SOC)分析师开发的浏览器辅助脚本,
 
 你可以使用 Greasy Fork 安装和更新 BTAS 脚本，点击下列地址:
 
--   [BTAS Stable Version](https://greasyfork.org/en/scripts/463908-btas)
--   [BTAS Beta Version](https://greasyfork.org/zh-CN/scripts/469395-btas-beta)
+- [BTAS Stable Version](https://greasyfork.org/en/scripts/463908-btas)
+- [BTAS Beta Version](https://greasyfork.org/zh-CN/scripts/469395-btas-beta)
 
 ## 功能介绍: 蓝队增强 & BTAS
 
@@ -30,7 +30,7 @@ BTAS 是一款为安全运营中心(SOC)分析师开发的浏览器辅助脚本,
 
 ## 贡献
 
-由 Barry 在 0.93 版本之前开发，并由 Jack 在 1.0.1 版本进行了重构，负责后续的开发和维护工作，Xingyu 在 1.3.2 版本之后参与开发工作。
+Barry, Jack, Xingyu, Mike
 
 ## 许可证
 
