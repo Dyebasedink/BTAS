@@ -2,7 +2,7 @@
 // @name         BTAS
 // @namespace    https://github.com/Mr-Tree-S/BTAS
 // @homepageURL  https://github.com/Mr-Tree-S/BTAS
-// @version      2.7.6
+// @version      2.7.7
 // @description  Blue Team Assistance Script
 // @author       Barry, Jack, Xingyu, Mike
 // @license      Apache-2.0
