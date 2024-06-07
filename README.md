@@ -1,8 +1,8 @@
 # BTAS
 
-> Blue Team Assistance Script
+> Blue Team Auxiliary Script
 
-BTAS is a browser assistant script developed for Security Operations Center (SOC) analysts, designed to fully simplify workflows and significantly enhance efficiency. The script runs on the Tampermonkey extension and integrates multiple practical functions, including rapid response, threat intelligence search, log parsing, and automation, greatly improving the efficiency of analysts.
+BTAS is a browser auxiliary script developed for Security Operations Center (SOC) analysts, designed to fully simplify workflows and significantly enhance efficiency. The script runs on the Tampermonkey extension and integrates multiple practical functions, including rapid response, threat intelligence search, log parsing, and automation, greatly improving the efficiency of analysts.
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
