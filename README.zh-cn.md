@@ -2,7 +2,7 @@
 
 # BTAS
 
-> Blue Team Assistance Script
+> Blue Team Auxiliary Script
 
 BTAS 是一款为安全运营中心(SOC)分析师开发的浏览器辅助脚本,旨在全面简化工作流程,显著提升工作效率。该脚本基于油猴(Tampermonkey)扩展运行,集成了多项实用功能,涵盖快速响应、威胁情报查询、日志解析、自动化操作等多个层面,大幅提高了分析师的工作效率。
 
